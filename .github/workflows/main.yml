@@ -1,0 +1,27 @@
+name: Assign Labels to Pull Requests
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  assign_labels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Assign Labels
+        run: |
+          # Your custom script or commands to assign labels
+          # You can use the GitHub API to identify and label pull requests.
+
+          # For example, you can assign a label based on the presence of specific keywords in the pull request title or body.
+          # Here's a simple example:
+
+          pr_title=$(jq -r .pull_request.title $GITHUB_EVENT_PATH)
+
+          if [[ $pr_title == *"bug"* ]]; then
+            echo "Assigning 'bug' label to the pull request."
+            echo "::add-labels:bug::"
+          fi
